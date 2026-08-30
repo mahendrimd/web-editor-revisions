@@ -1,6 +1,6 @@
 # Web Editor Revisions
 
-Web Editor Revisions is an independent implementer specification for portable pending revisions in text-focused Web editors. Read the [maintainer-reviewed version 1 publication](standards/v1/README.md) or browse the [Web publication](https://mahendrimd.github.io/web-editor-revisions/).
+Web Editor Revisions is an independent implementer specification for portable pending revisions in text-focused Web editors. Read the [maintainer-reviewed version 1.0.1 publication](standards/v1.0.1/README.md) or browse the [Web publication](https://mahendrimd.github.io/web-editor-revisions/).
 
 ## Independent project
 

@@ -31,6 +31,9 @@ CANONICAL_ORIGIN = os.environ.get(
     "PAGES_ORIGIN", f"https://{GITHUB_OWNER}.github.io"
 ).rstrip("/")
 DEFAULT_BASE_URL = "/web-editor-revisions"
+PUBLICATION_ROOT = ROOT / "standards/v1.0.1"
+PUBLICATION_VERSION = "1.0.1"
+RELEASE_TAG = "web-editor-revisions-v1.0.1"
 
 
 @dataclass(frozen=True)
@@ -45,19 +48,19 @@ class Page:
 
 CORE_PAGES = [
     Page(
-        ROOT / "standards/v1/README.md",
+        PUBLICATION_ROOT / "README.md",
         "/v1/",
-        "Version 1 publication",
+        "Version 1.0.1 publication",
         "Publication map, adoption path, version boundary, and known limits.",
         "Publication index",
         "publication",
     ),
     Page(
-        ROOT / "standards/v1/standard.md",
+        PUBLICATION_ROOT / "standard.md",
         "/v1/standard/",
         "Web Editor Revisions",
         "Normative core semantics, serialization, loss reporting, and conformance requirements.",
-        "Normative · Version 1",
+        "Normative · Version 1.0.1",
         "standard",
     ),
     Page(
@@ -65,7 +68,7 @@ CORE_PAGES = [
         "/v1/schema/",
         "Normative JSON Schema",
         "The structural contract for Web Editor Revisions version 1 interchange documents.",
-        "Normative · Version 1",
+        "Normative · Version 1.0.1",
         "schema",
     ),
     Page(
@@ -73,35 +76,35 @@ CORE_PAGES = [
         "/v1/profiles/",
         "Mapping profiles",
         "Direction-specific mappings between the core model and selected document or editor formats.",
-        "Normative profiles · Version 1",
+        "Normative profiles · Version 1.0.1",
         "profiles",
     ),
     Page(
-        ROOT / "standards/v1/profiles/wordprocessingml.md",
+        PUBLICATION_ROOT / "profiles/wordprocessingml.md",
         "/v1/profiles/wordprocessingml/",
         "WordprocessingML Tracked Revisions Mapping Profile",
         "Normative mapping profile for Strict WordprocessingML tracked revisions.",
-        "Normative profile · Version 1",
+        "Normative profile · Version 1.0.1",
         "profiles",
     ),
     Page(
-        ROOT / "standards/v1/profiles/odf-text.md",
+        PUBLICATION_ROOT / "profiles/odf-text.md",
         "/v1/profiles/odf-text/",
         "ODF Text Change Tracking Mapping Profile",
         "Normative mapping profile for ODF Text 1.4 change tracking.",
-        "Normative profile · Version 1",
+        "Normative profile · Version 1.0.1",
         "profiles",
     ),
     Page(
-        ROOT / "standards/v1/profiles/reference-web-editor.md",
+        PUBLICATION_ROOT / "profiles/reference-web-editor.md",
         "/v1/profiles/reference-web-editor/",
         "Reference Web Editor Track Changes Mapping Profile",
         "Normative mapping profile for the pinned Reference Web Editor snapshot.",
-        "Normative profile · Version 1",
+        "Normative profile · Version 1.0.1",
         "profiles",
     ),
     Page(
-        ROOT / "standards/v1/evaluation/README.md",
+        PUBLICATION_ROOT / "evaluation/README.md",
         "/v1/conformance/",
         "Evaluation and claim packaging",
         "Executable core evaluation and reproducible profile claim guidance.",
@@ -109,7 +112,7 @@ CORE_PAGES = [
         "conformance",
     ),
     Page(
-        ROOT / "standards/v1/evidence.md",
+        PUBLICATION_ROOT / "evidence.md",
         "/v1/evidence/",
         "Evidence index",
         "Primary-source support, contrary evidence, uncertainty, and reassessment boundaries.",
@@ -117,7 +120,7 @@ CORE_PAGES = [
         "evidence",
     ),
     Page(
-        ROOT / "standards/v1/provenance.md",
+        PUBLICATION_ROOT / "provenance.md",
         "/v1/decisions/",
         "Decision provenance",
         "Material design choices, alternatives, retained tensions, and maintenance guidance.",
@@ -125,12 +128,12 @@ CORE_PAGES = [
         "decisions",
     ),
     Page(
-        ROOT / "standards/v1/validation-report.md",
-        "/v1/validation/",
-        "Publication validation report",
-        "Reproducible maintainer validation for the accepted version 1 publication.",
-        "Informative · Maintainer validation",
-        "validation",
+        PUBLICATION_ROOT / "release.md",
+        "/v1/release/",
+        "Version 1.0.1 release record",
+        "Change set, compatibility, validation, acceptance, and propagation record.",
+        "Informative · Release record",
+        "release",
     ),
 ]
 
@@ -157,7 +160,7 @@ def output_path(output_dir: Path, route: str) -> Path:
 
 def source_route_map(pages: list[Page]) -> dict[Path, str]:
     mapping = {page.source.resolve(): page.route for page in pages if page.source}
-    for decision in (ROOT / "standards/v1/decisions").glob("*.md"):
+    for decision in (PUBLICATION_ROOT / "decisions").glob("*.md"):
         mapping[decision.resolve()] = f"/v1/decisions/{decision.stem}/"
     return mapping
 
@@ -171,8 +174,8 @@ def resolve_source_target(source: Path, target: str) -> Path:
 
 def public_artifact_route(path: Path) -> str | None:
     path = path.resolve()
-    schema_root = (ROOT / "standards/v1/schema").resolve()
-    evaluation_root = (ROOT / "standards/v1/evaluation").resolve()
+    schema_root = (PUBLICATION_ROOT / "schema").resolve()
+    evaluation_root = (PUBLICATION_ROOT / "evaluation").resolve()
     try:
         return "/v1/schema/" + path.relative_to(schema_root).as_posix()
     except ValueError:
@@ -274,7 +277,7 @@ def sidebar(base_url: str, current: str) -> str:
 
     return f"""
       <nav class="side-nav" aria-label="Publication navigation">
-        <p class="side-nav-label">Version 1</p>
+        <p class="side-nav-label">Version 1.0.1</p>
         {link("Publication", "/v1/", True)}
         <p class="side-nav-label">Normative</p>
         {link("Core standard", "/v1/standard/")}
@@ -290,7 +293,7 @@ def sidebar(base_url: str, current: str) -> str:
         <p class="side-nav-label">Supporting</p>
         {link("Evidence", "/v1/evidence/")}
         {link("Decision records", "/v1/decisions/")}
-        {link("Validation", "/v1/validation/")}
+        {link("Release record", "/v1/release/")}
       </nav>
     """
 
@@ -306,7 +309,7 @@ def global_header(base_url: str, current: str) -> str:
     <header class="site-header">
       <div class="header-inner">
         <a class="site-name" href="{route_url(base_url, '/')}">Web Editor Revisions</a>
-        <span class="version-mark">v1</span>
+        <span class="version-mark">v1.0.1</span>
         <nav class="global-nav" aria-label="Primary navigation">
           <a{active_class(current, "/v1/standard/")} href="{route_url(base_url, '/v1/standard/')}">Standard</a>
           <a{active_class(current, "/v1/profiles/")} href="{route_url(base_url, '/v1/profiles/')}">Profiles</a>
@@ -423,7 +426,7 @@ def render_home(base_url: str) -> str:
       <p class="eyebrow">Independent implementer specification</p>
       <h1 id="home-title">Portable pending revisions for Web editors.</h1>
       <p class="home-summary">A vendor-neutral interchange model for preserving, resolving, and truthfully reporting pending changes in text-focused editors.</p>
-      <p class="publication-state"><span>Maintainer-reviewed</span><span>Version 1</span><span>Released</span></p>
+      <p class="publication-state"><span>Maintainer-reviewed</span><span>Version 1.0.1</span><span>Released</span></p>
       <div class="primary-actions">
         <a class="primary-button" href="{standard}">Read the standard</a>
         <a href="{conformance}">Implement and evaluate</a>
@@ -439,10 +442,10 @@ def render_home(base_url: str) -> str:
       </div>
     </section>
 
-    <section class="home-grid" aria-label="Version 1 publication">
+    <section class="home-grid" aria-label="Version 1.0.1 publication">
       <div>
         <p class="eyebrow">Normative publication</p>
-        <h2>Version 1</h2>
+        <h2>Version 1.0.1</h2>
         <p>The bounded core covers insertion, deletion, replacement, four inline-formatting properties, paragraph split and merge, selective resolution, canonical JSON, and explicit loss reporting.</p>
         <ul class="plain-links">
           <li><a href="{standard}">Core standard</a></li>
@@ -453,12 +456,12 @@ def render_home(base_url: str) -> str:
       <div>
         <p class="eyebrow">Supporting material</p>
         <h2>Trace and verify</h2>
-        <p>Evaluation procedures, curated evidence, decision records, and the maintainer validation report remain separate from normative requirements.</p>
+        <p>Evaluation procedures, curated evidence, decision records, and the durable release record remain separate from normative requirements.</p>
         <ul class="plain-links">
           <li><a href="{conformance}">Evaluation and claim packaging</a></li>
           <li><a href="{route_url(base_url, '/v1/evidence/')}">Evidence index</a></li>
           <li><a href="{route_url(base_url, '/v1/decisions/')}">Decision records</a></li>
-          <li><a href="{route_url(base_url, '/v1/validation/')}">Validation report</a></li>
+          <li><a href="{route_url(base_url, '/v1/release/')}">Release record</a></li>
         </ul>
       </div>
     </section>
@@ -498,13 +501,13 @@ def render_profiles_index(base_url: str) -> str:
 
 
 def render_schema_page(base_url: str) -> str:
-    schema_path = ROOT / "standards/v1/schema/web-editor-revisions-v1.schema.json"
+    schema_path = PUBLICATION_ROOT / "schema/web-editor-revisions-v1.schema.json"
     schema = html.escape(schema_path.read_text())
     raw_url = route_url(base_url, "/v1/schema/web-editor-revisions-v1.schema.json")
     return f"""
 <h1>Normative JSON Schema</h1>
 <p>The schema defines the structural contract for version 1 interchange documents. It applies together with the semantic requirements in the <a href="{route_url(base_url, '/v1/standard/')}">core standard</a>.</p>
-<p class="artifact-actions"><a class="primary-button" href="{raw_url}" download>Download schema</a><a href="{REPOSITORY_URL}/blob/main/standards/v1/schema/web-editor-revisions-v1.schema.json">View source</a></p>
+<p class="artifact-actions"><a class="primary-button" href="{raw_url}" download>Download schema</a><a href="{REPOSITORY_URL}/blob/main/standards/v1.0.1/schema/web-editor-revisions-v1.schema.json">View source</a></p>
 <h2 id="schema-source">Schema source</h2>
 <pre class="schema-view"><code>{schema}</code></pre>
 """
@@ -512,7 +515,7 @@ def render_schema_page(base_url: str) -> str:
 
 def render_decisions_index(base_url: str) -> str:
     rows = []
-    for path in sorted((ROOT / "standards/v1/decisions").glob("*.md")):
+    for path in sorted((PUBLICATION_ROOT / "decisions").glob("*.md")):
         text = path.read_text()
         title_match = re.search(r"^# (.+)$", text, re.MULTILINE)
         phase_match = re.search(r"^Phase: (.+)$", text, re.MULTILINE)
@@ -539,7 +542,7 @@ def render_about(base_url: str) -> str:
 <h2 id="independence">Independence</h2>
 <p>The project is not an official standard and is not affiliated with, authorized, sponsored, endorsed, or approved by any referenced vendor, open-source project, or standards organization. Product and organization names identify technical sources and interoperability boundaries only.</p>
 <h2 id="publication-boundary">Publication boundary</h2>
-<p>Version 1 is identified by the release tag <code>web-editor-revisions-v1</code>. The core, serialization profile, and mapping profiles version independently. Claims should remain pinned to the exact publication commit and measured implementation boundary.</p>
+<p>Version 1.0.1 is identified by the release tag <code>web-editor-revisions-v1.0.1</code>. The core, serialization profile, and mapping profiles version independently. Claims should remain pinned to the exact publication commit and measured implementation boundary.</p>
 <h2 id="source-and-license">Source and license</h2>
 <p>The complete source is available on <a href="{REPOSITORY_URL}">GitHub</a>. Original specification text, schemas, evaluation code, fixtures, and supporting material are licensed under the <a href="{route_url(base_url, '/license/')}">Apache License 2.0</a>.</p>
 """
@@ -584,12 +587,12 @@ def write_page(output_dir: Path, route: str, markup: str) -> None:
 
 
 def copy_artifacts(output_dir: Path) -> None:
-    schema_source = ROOT / "standards/v1/schema/web-editor-revisions-v1.schema.json"
+    schema_source = PUBLICATION_ROOT / "schema/web-editor-revisions-v1.schema.json"
     schema_target = output_dir / "v1/schema/web-editor-revisions-v1.schema.json"
     schema_target.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(schema_source, schema_target)
 
-    evaluation_source = ROOT / "standards/v1/evaluation"
+    evaluation_source = PUBLICATION_ROOT / "evaluation"
     evaluation_target = output_dir / "v1/conformance/artifacts"
     for source in evaluation_source.rglob("*"):
         relative = source.relative_to(evaluation_source)
@@ -618,8 +621,8 @@ def publication_metadata(base_url: str, decision_pages: list[Page]) -> dict[str,
 
     return {
         "publication": "Web Editor Revisions",
-        "publicationSet": "web-editor-revisions-v1",
-        "releaseTag": "web-editor-revisions-v1",
+        "publicationSet": f"web-editor-revisions-v{PUBLICATION_VERSION}",
+        "releaseTag": RELEASE_TAG,
         "status": "maintainer-reviewed",
         "coreModelVersion": "1",
         "serializationProfile": "json-jcs-1",
@@ -662,8 +665,8 @@ def write_support_files(
 
 > Independent implementer specification for portable pending revisions in text-focused Web editors.
 
-Status: Maintainer-reviewed version 1
-Publication set: web-editor-revisions-v1
+Status: Maintainer-reviewed version 1.0.1
+Publication set: web-editor-revisions-v1.0.1
 Core model: 1
 Serialization profile: json-jcs-1
 Canonical publication: {CANONICAL_ORIGIN}{route_url(base_url, '/v1/')}
@@ -684,7 +687,7 @@ Repository: {REPOSITORY_URL}
 
 - Evidence index: {CANONICAL_ORIGIN}{route_url(base_url, '/v1/evidence/')}
 - Decision records: {CANONICAL_ORIGIN}{route_url(base_url, '/v1/decisions/')}
-- Validation report: {CANONICAL_ORIGIN}{route_url(base_url, '/v1/validation/')}
+- Release record: {CANONICAL_ORIGIN}{route_url(base_url, '/v1/release/')}
 
 Normative requirements are only those identified as normative by the core standard or a mapping profile. Evaluation instructions, provenance, rationale, and examples are informative unless a normative document explicitly incorporates them.
 """
@@ -707,7 +710,7 @@ def build(output_dir: Path, base_url: str) -> None:
     output_dir.mkdir(parents=True)
 
     decision_pages = []
-    for path in sorted((ROOT / "standards/v1/decisions").glob("*.md")):
+    for path in sorted((PUBLICATION_ROOT / "decisions").glob("*.md")):
         match = re.search(r"^# (.+)$", path.read_text(), re.MULTILINE)
         title = match.group(1) if match else path.stem
         decision_pages.append(
@@ -715,7 +718,7 @@ def build(output_dir: Path, base_url: str) -> None:
                 path,
                 f"/v1/decisions/{path.stem}/",
                 title,
-                "Authoritative project decision record supporting the version 1 publication.",
+                "Authoritative project decision record supporting the version 1.0.1 publication.",
                 "Informative · Active decision record",
                 "decisions",
             )
@@ -734,11 +737,11 @@ def build(output_dir: Path, base_url: str) -> None:
         if page.route == "/v1/profiles/":
             content = render_profiles_index(base_url)
             toc = [{"id": "claim-boundary", "name": "Claim boundary", "children": []}]
-            source_override = f"{REPOSITORY_URL}/tree/main/standards/v1/profiles"
+            source_override = f"{REPOSITORY_URL}/tree/main/standards/v1.0.1/profiles"
         elif page.route == "/v1/schema/":
             content = render_schema_page(base_url)
             toc = [{"id": "schema-source", "name": "Schema source", "children": []}]
-            source_override = f"{REPOSITORY_URL}/blob/main/standards/v1/schema/web-editor-revisions-v1.schema.json"
+            source_override = f"{REPOSITORY_URL}/blob/main/standards/v1.0.1/schema/web-editor-revisions-v1.schema.json"
         elif page.route == "/v1/decisions/":
             content = render_decisions_index(base_url)
             toc = [{"id": "maintenance-use", "name": "Maintenance use", "children": []}]

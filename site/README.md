@@ -1,7 +1,7 @@
 # Publication site
 
 The website is a generated presentation layer over the authoritative files in
-`standards/v1/`. The generator does not modify or duplicate the normative
+`standards/v1.0.1/`. The generator does not modify or duplicate the normative
 publication source.
 
 Build and verify from the repository root:

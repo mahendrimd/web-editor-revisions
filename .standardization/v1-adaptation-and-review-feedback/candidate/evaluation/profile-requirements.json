@@ -1,0 +1,226 @@
+{
+  "catalogVersion": "2",
+  "coreChecks": 13,
+  "profiles": [
+    {
+      "id": "web-editor-revisions.wordprocessingml-tracked-revisions",
+      "version": "1",
+      "document": "../profiles/wordprocessingml.md",
+      "directions": [
+        {
+          "id": "wordprocessingml-to-core",
+          "kind": "native-to-core",
+          "alwaysRequired": [
+            {"id": "bound-source-core-report", "description": "Bind the complete Strict package input, core output, profile, direction, and measured boundary."},
+            {"id": "accepted-formatting-booleans", "description": "Resolve exact accepted-state values for all four core formatting properties."},
+            {"id": "stable-synthesized-identity", "description": "Synthesize source-absent identity stably and report it truthfully."},
+            {"id": "unavailable-deleted-payload", "description": "Refuse a deletion whose exact payload is unavailable."},
+            {"id": "unsupported-formatting", "description": "Refuse or truthfully handle unsupported formatting under an authorized policy."},
+            {"id": "adjacent-replacement-shape", "description": "Do not promote adjacent insertion and deletion revisions to atomic replacement."},
+            {"id": "nested-content-refusal", "description": "Refuse nested or dependent revision content without mutation."},
+            {"id": "moved-content-refusal", "description": "Refuse moved content outside the subset without mutation."}
+          ],
+          "capabilities": {
+            "insert": [
+              {"id": "insertion-non-bmp", "description": "Map non-BMP insertion text at valid UTF-16 boundaries."},
+              {"id": "colocated-insertions", "description": "Reproduce deterministic ordering for co-located insertions."}
+            ],
+            "delete": [{"id": "deletion-non-bmp", "description": "Map non-BMP deletion text with exact payload and projections."}],
+            "format": [
+              {"id": "format-bold", "description": "Map exact effective bold before and after values."},
+              {"id": "format-italic", "description": "Map exact effective italic before and after values."},
+              {"id": "format-single-underline", "description": "Map exact effective single-underline before and after values."},
+              {"id": "format-strikethrough", "description": "Map exact effective strikethrough before and after values."}
+            ],
+            "paragraph-split": [{"id": "paragraph-split", "description": "Map tracked paragraph insertion with exact split projections."}],
+            "paragraph-merge": [{"id": "paragraph-merge", "description": "Map tracked paragraph deletion with exact merge projections."}]
+          },
+          "sourcePersistence": [
+            {"id": "source-package-save-reload", "description": "Verify the authoritative source package across save and reload."},
+            {"id": "source-persistence-identity-provenance-marks", "description": "Retain bound identity, provenance, and revision marks across source persistence."}
+          ]
+        },
+        {
+          "id": "core-to-wordprocessingml",
+          "kind": "core-to-native",
+          "alwaysRequired": [
+            {"id": "core-input-validation", "description": "Reject invalid core input before native mutation."},
+            {"id": "bound-core-native-report", "description": "Bind the complete core input, Strict package output, direction, and save/reload boundary."},
+            {"id": "accepted-formatting-booleans", "description": "Retain all four accepted-state formatting values after native reload."},
+            {"id": "stable-export-identity-policy", "description": "Carry identity or refuse or omit it only under the required reported policy."},
+            {"id": "core-replacement-policy", "description": "Refuse core replacement or emit only an authorized reported non-equivalent pair."},
+            {"id": "native-save-reload-success", "description": "Verify a successful package across independent reopen."},
+            {"id": "native-clean-failure", "description": "Verify a failed native write leaves no output mutation."},
+            {"id": "native-rollback", "description": "Verify full rollback after attempted native mutation."},
+            {"id": "native-partial-persistence", "description": "Detect residual native mutation as transaction-integrity failure."},
+            {"id": "bound-identity-provenance-marks", "description": "Retain bound identity, available provenance, and revision marks across persistence."}
+          ],
+          "capabilities": {
+            "insert": [
+              {"id": "insertion-non-bmp", "description": "Emit exact non-BMP tracked insertion content."},
+              {"id": "colocated-insertions", "description": "Retain explicit ordering for co-located insertions after reload."}
+            ],
+            "delete": [{"id": "deletion-non-bmp", "description": "Emit exact restorable non-BMP deletion content."}],
+            "format": [
+              {"id": "format-bold", "description": "Emit exact current and prior bold values."},
+              {"id": "format-italic", "description": "Emit exact current and prior italic values."},
+              {"id": "format-single-underline", "description": "Emit exact current and prior single-underline values."},
+              {"id": "format-strikethrough", "description": "Emit exact current and prior strikethrough values."}
+            ],
+            "paragraph-split": [{"id": "paragraph-split", "description": "Retain an exact tracked paragraph split after reload."}],
+            "paragraph-merge": [{"id": "paragraph-merge", "description": "Retain an exact tracked paragraph merge after reload."}]
+          },
+          "sourcePersistence": []
+        }
+      ]
+    },
+    {
+      "id": "web-editor-revisions.odf-text-change-tracking",
+      "version": "1",
+      "document": "../profiles/odf-text.md",
+      "directions": [
+        {
+          "id": "odf-text-to-core",
+          "kind": "native-to-core",
+          "alwaysRequired": [
+            {"id": "bound-source-core-report", "description": "Bind the complete ODF input, core output, auxiliary evidence, direction, and boundary."},
+            {"id": "accepted-formatting-booleans", "description": "Resolve all four accepted-state formatting values through ODF style inheritance."},
+            {"id": "stable-xml-id", "description": "Preserve a usable stable xml:id truthfully."},
+            {"id": "source-absent-identity", "description": "Synthesize source-absent identity stably and report it."},
+            {"id": "format-change-refusal", "description": "Refuse an unresolvable native text:format-change without mutation."},
+            {"id": "paired-replacement-shape", "description": "Do not promote paired insertion and deletion regions to atomic replacement."},
+            {"id": "ambiguous-marks-refusal", "description": "Refuse ambiguous change marks without mutation."},
+            {"id": "nested-marks-refusal", "description": "Refuse nested marks outside the subset without mutation."},
+            {"id": "cross-scope-marks-refusal", "description": "Refuse cross-scope marks without mutation."}
+          ],
+          "capabilities": {
+            "insert": [
+              {"id": "paragraph-insertion-non-bmp", "description": "Map paragraph-local non-BMP insertion text."},
+              {"id": "colocated-mark-order", "description": "Reproduce deterministic order for co-located insertion marks."}
+            ],
+            "delete": [
+              {"id": "paragraph-deletion-non-bmp", "description": "Reconstruct paragraph-local non-BMP deletion text."},
+              {"id": "deletion-formatting-reconstruction", "description": "Reconstruct exact formatting for deleted content."}
+            ],
+            "format": [{"id": "format-change-authoritative-values", "description": "Use bound authoritative evidence for exact format before and after values."}],
+            "paragraph-split": [{"id": "paragraph-split", "description": "Map paragraph split under ODF reconstruction rules."}],
+            "paragraph-merge": [{"id": "paragraph-merge", "description": "Map paragraph merge under ODF reconstruction rules."}]
+          },
+          "sourcePersistence": [
+            {"id": "source-package-save-reload", "description": "Verify the authoritative ODF source across save and reload."},
+            {"id": "source-persistence-projections-identities", "description": "Retain bound projections and identities across source persistence."}
+          ]
+        },
+        {
+          "id": "core-to-odf-text",
+          "kind": "core-to-native",
+          "alwaysRequired": [
+            {"id": "core-input-validation", "description": "Reject invalid core input before native mutation."},
+            {"id": "bound-core-native-report", "description": "Bind the complete core input, ODF output, direction, and save/reload boundary."},
+            {"id": "accepted-formatting-booleans", "description": "Retain all four accepted-state formatting values after ODF reload."},
+            {"id": "stable-export-identity-policy", "description": "Carry core identity or refuse or omit it only under the required reported policy."},
+            {"id": "core-format-refusal", "description": "Refuse core format proposals unless a separately versioned extension supplies complete semantics."},
+            {"id": "core-replacement-policy", "description": "Refuse core replacement or emit only an authorized reported non-equivalent pair."},
+            {"id": "native-save-reload-success", "description": "Verify a successful ODF package across independent reopen."},
+            {"id": "native-clean-failure", "description": "Verify a failed native write leaves no output mutation."},
+            {"id": "native-rollback", "description": "Verify full rollback after attempted ODF mutation."},
+            {"id": "native-partial-persistence", "description": "Detect residual ODF mutation as transaction-integrity failure."}
+          ],
+          "capabilities": {
+            "insert": [
+              {"id": "paragraph-insertion-non-bmp", "description": "Emit exact paragraph-local non-BMP insertion markup."},
+              {"id": "colocated-mark-order", "description": "Retain explicit order for co-located insertions after reload."}
+            ],
+            "delete": [
+              {"id": "paragraph-deletion-non-bmp", "description": "Emit exactly reconstructible non-BMP deletion content."},
+              {"id": "deletion-formatting-reconstruction", "description": "Retain exact deleted formatting in ODF reconstruction."}
+            ],
+            "paragraph-split": [{"id": "paragraph-split", "description": "Retain exact split projections under ODF reconstruction and reload."}],
+            "paragraph-merge": [{"id": "paragraph-merge", "description": "Retain exact merge projections under ODF reconstruction and reload."}]
+          },
+          "sourcePersistence": []
+        }
+      ]
+    },
+    {
+      "id": "web-editor-revisions.reference-web-editor-track-changes",
+      "version": "1",
+      "document": "../profiles/reference-web-editor.md",
+      "directions": [
+        {
+          "id": "reference-web-editor-to-core",
+          "kind": "native-to-core",
+          "alwaysRequired": [
+            {"id": "bound-source-core-report", "description": "Bind editor data, suggestion records, configuration, core output, direction, and boundary."},
+            {"id": "accepted-formatting-booleans", "description": "Resolve exact accepted-state values for all four core formatting properties."},
+            {"id": "stable-suggestion-identity", "description": "Retain a usable stable suggestion identity truthfully."},
+            {"id": "synthesized-paragraph-identity", "description": "Synthesize source-absent paragraph identity stably and report it."},
+            {"id": "format-command-missing-refusal", "description": "Refuse a command-shaped format suggestion with missing parameters."},
+            {"id": "separate-replacement-shape", "description": "Do not promote separate insertion and deletion suggestions to atomic replacement."},
+            {"id": "multi-range-refusal", "description": "Refuse a multi-range suggestion outside the subset."},
+            {"id": "chained-refusal", "description": "Refuse a chained suggestion outside the subset."},
+            {"id": "nested-refusal", "description": "Refuse a nested suggestion outside the subset."},
+            {"id": "auto-joined-refusal", "description": "Refuse an auto-joined suggestion that changes the core boundary."},
+            {"id": "marker-record-mismatch", "description": "Detect and refuse marker and suggestion-record mismatch."}
+          ],
+          "capabilities": {
+            "insert": [
+              {"id": "insertion-non-bmp", "description": "Map insertion suggestion text at valid non-BMP UTF-16 boundaries."},
+              {"id": "colocated-insertions", "description": "Reproduce verified deterministic order for co-located insertions."}
+            ],
+            "delete": [{"id": "deletion-non-bmp", "description": "Map deletion suggestion text with exact payload and projections."}],
+            "format": [
+              {"id": "format-bold", "description": "Map exact bold attribute before and after values."},
+              {"id": "format-italic", "description": "Map exact italic attribute before and after values."},
+              {"id": "format-underline", "description": "Map exact underline attribute before and after values."},
+              {"id": "format-strikethrough", "description": "Map exact strikethrough attribute before and after values."},
+              {"id": "format-command-complete", "description": "Map a command-based format suggestion with complete stable parameters."}
+            ],
+            "paragraph-split": [{"id": "paragraph-split", "description": "Map paragraph split with exact projections and identity behavior."}],
+            "paragraph-merge": [{"id": "paragraph-merge", "description": "Map paragraph merge with exact projections and identity behavior."}]
+          },
+          "sourcePersistence": [
+            {"id": "source-async-save-reload-success", "description": "Verify editor data and suggestion records across source save and reload."},
+            {"id": "source-async-clean-failure", "description": "Verify source persistence failure leaves no mutation."},
+            {"id": "source-async-rollback", "description": "Verify source editor and suggestion data roll back together."},
+            {"id": "source-async-partial-persistence", "description": "Detect residual source editor and database divergence."}
+          ]
+        },
+        {
+          "id": "core-to-reference-web-editor",
+          "kind": "core-to-native",
+          "alwaysRequired": [
+            {"id": "core-input-validation", "description": "Reject invalid core input before native mutation."},
+            {"id": "bound-core-native-report", "description": "Bind core input, editor data, suggestion records, configuration, direction, and save/reload boundary."},
+            {"id": "accepted-formatting-booleans", "description": "Retain all four accepted-state formatting values after reload."},
+            {"id": "stable-export-identity-policy", "description": "Carry core identity or refuse or omit it only under the required reported policy."},
+            {"id": "core-replacement-policy", "description": "Refuse core replacement or emit only an authorized reported non-equivalent pair."},
+            {"id": "auto-joined-output-detection", "description": "Prevent or detect automatic joining or splitting that changes core boundaries."},
+            {"id": "marker-record-persistence", "description": "Retain complete marker-to-record binding after reload."},
+            {"id": "native-save-reload-success", "description": "Verify asynchronous output save and reload."},
+            {"id": "native-clean-failure", "description": "Verify a failed asynchronous write leaves no output mutation."},
+            {"id": "native-rollback", "description": "Verify full rollback of editor and suggestion data."},
+            {"id": "native-partial-persistence", "description": "Detect residual editor and database divergence as transaction-integrity failure."}
+          ],
+          "capabilities": {
+            "insert": [
+              {"id": "insertion-non-bmp", "description": "Emit one exact insertion suggestion with non-BMP text."},
+              {"id": "colocated-insertions", "description": "Retain explicit order for co-located core insertions after reload."}
+            ],
+            "delete": [{"id": "deletion-non-bmp", "description": "Emit one exact restorable deletion suggestion with non-BMP text."}],
+            "format": [
+              {"id": "format-bold", "description": "Emit one exact atomic bold suggestion."},
+              {"id": "format-italic", "description": "Emit one exact atomic italic suggestion."},
+              {"id": "format-underline", "description": "Emit one exact atomic underline suggestion."},
+              {"id": "format-strikethrough", "description": "Emit one exact atomic strikethrough suggestion."},
+              {"id": "format-multi-property-atomic", "description": "Retain one multi-property core format proposal as one native unit."}
+            ],
+            "paragraph-split": [{"id": "paragraph-split", "description": "Retain one exact independently resolvable paragraph split."}],
+            "paragraph-merge": [{"id": "paragraph-merge", "description": "Retain one exact independently resolvable paragraph merge."}]
+          },
+          "sourcePersistence": []
+        }
+      ]
+    }
+  ]
+}

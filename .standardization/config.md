@@ -5,8 +5,8 @@ Publication directory pattern: standards/v{version}
 Revision assessment directory pattern: standards/revision-assessments
 Versioning system: Git
 Git command permissions: elevated-write-only
-Release preservation: Preserve releases in distinct versioned directories with matching document metadata; Git history and immutable release tags provide additional recovery
-Release storage: side-by-side
+Release preservation: Preserve the current release in its resolved versioned directory; immutable Git release tags preserve superseded releases and their matching document metadata
+Release storage: single-current-tagged-history
 Version policy: standard-versioning
 Initial version: 1
 Version levels: three
@@ -23,4 +23,4 @@ The standard-versioning policy governs publication-set releases. Embedded modelV
 
 Existing release identifiers normalize consistently: document metadata version 1, directory standards/v1, and tag web-editor-revisions-v1 all designate conceptual version 1.0.0 with canonical rendering 1.
 
-The canonical release directory is authoritative; the generated website derives from it. Historical website pages are not required.
+The current canonical release directory is authoritative; the generated website derives from it. Superseded release directories are removed from the active tree after their immutable tags are verified. Historical website pages are not required.

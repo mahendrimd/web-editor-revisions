@@ -35,9 +35,9 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: "1"
         run: |
-          python standards/v1/evaluation/run_conformance.py
-          python standards/v1/evaluation/validate_profile_claim.py --check-catalog
-          python standards/v1/evaluation/validate_profile_claim.py --self-test
+          python standards/v1.0.1/evaluation/run_conformance.py
+          python standards/v1.0.1/evaluation/validate_profile_claim.py --check-catalog
+          python standards/v1.0.1/evaluation/validate_profile_claim.py --self-test
 
       - name: Build website
         run: python site/build.py --base-url "/${{ github.event.repository.name }}"

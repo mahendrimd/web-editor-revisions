@@ -128,7 +128,7 @@ def verify(output: Path, base_url: str) -> None:
         "v1/conformance/index.html",
         "v1/evidence/index.html",
         "v1/decisions/index.html",
-        "v1/validation/index.html",
+        "v1/release/index.html",
         "v1/publication.json",
         "search-index.json",
         "llms.txt",
